@@ -92,12 +92,13 @@ export function Footer() {
                 <Phone className="h-5 w-5 text-primary flex-shrink-0" />
                 <a href="tel:+919876543210" className="text-muted-foreground hover:text-primary transition-colors text-sm">
                   +91 98765 43210
+                  +91 9867788995
                 </a>
               </li>
               <li className="flex items-center space-x-3">
                 <Mail className="h-5 w-5 text-primary flex-shrink-0" />
                 <a href="mailto:info@ryzentech.in" className="text-muted-foreground hover:text-primary transition-colors text-sm">
-                  info@ryzentech.in
+                  ryzentechnologies.office@gmail.com
                 </a>
               </li>
             </ul>

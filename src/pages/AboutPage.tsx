@@ -91,7 +91,7 @@ const AboutPage = () => {
       <PageHero
         badge="About Us"
         title="Engineering Solutions for Modern Businesses"
-        subtitle="From custom software, Websites, Apps, CRM to AI automation, we build systems that scale with you."
+        subtitle="Ryzen Tech builds custom software, AI automation, and RFID-powered systems for businesses that want to scale without chaos.."
         variant="image"
         bannerImage="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1920&q=80"
       />
