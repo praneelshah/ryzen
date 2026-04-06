@@ -25,7 +25,7 @@ const ContactPage = () => {
 
     try {
       // Formspree endpoint - Replace with your actual Formspree form endpoint
-      const FORMSPREE_ENDPOINT = import.meta.env.VITE_FORMSPREE_ENDPOINT || 'https://formspree.io/f/mlgooywz';
+      const FORMSPREE_ENDPOINT = import.meta.env.VITE_FORMSPREE_ENDPOINT || 'https://formspree.io/f/mlgoaodz';
 
       // Prepare form data
       const formDataToSend = new FormData();
