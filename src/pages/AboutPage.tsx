@@ -1,7 +1,6 @@
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { PageHero } from "@/components/ui/page-hero";
-import { AnimatedCounter } from "@/components/ui/animated-counter";
 import { Wrench, Factory, Code2, Brain, Check, Zap, Globe, Shield, Sparkles, ArrowRight, ChevronRight } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -77,10 +76,9 @@ const AboutPage = () => {
   ];
 
   const stats = [
-    { end: 10, suffix: "+", label: "Years Experience" },
-    { end: 500, suffix: "+", label: "Projects Delivered" },
-    { end: 200, suffix: "+", label: "Happy Clients" },
-    { end: 50, suffix: "+", label: "Team Members" }
+    "Textile manufacturer: on-time delivery up from 64% → 89%",
+    "Diamond trader: 2.5 hrs of manual work → 2 minutes",
+    "Insurance CRM: 40% faster claims processing"
   ];
 
   return (
@@ -114,10 +112,13 @@ const AboutPage = () => {
                   <span className="text-primary">not complicate them.</span>
                 </h2>
                 <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-                  Ryzen Tech was founded with a simple belief — we work with startups and growing businesses to design and develop custom CRMs, AI-driven tools, modern web & mobile applications, and RFID-powered automation systems.
+                  At Ryzen Tech, we partner with startups and growing businesses to design and develop custom CRMs, AI-driven tools, modern web and mobile applications, and RFID-powered automation systems.
+                </p>
+                <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+                  We don't just build software — we create systems that actually work in real environments: production floors, sales teams, logistics operations, and customer-facing workflows.
                 </p>
                 <p className="text-lg text-muted-foreground leading-relaxed">
-                  Our focus is not just on building software, but on creating systems that work in real environments — production floors, sales teams, logistics operations, and customer-facing workflows.
+                  With 20+ custom systems built · 4 industries deep · 2 founders who've done this before, we focus on delivering solutions that are practical, scalable, and built for real-world impact.
                 </p>
               </div>
             </div>
@@ -278,10 +279,19 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* Stats - Large Typography */}
+      {/* Stats - Case Studies */}
       <section className="py-32 px-4">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <span className="text-primary font-medium tracking-widest uppercase text-sm">Results</span>
+            <h2 className="text-4xl md:text-6xl font-bold mt-4">Real Impact, Real Numbers</h2>
+          </motion.div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
             {stats.map((stat, index) => (
               <motion.div
                 key={index}
@@ -289,15 +299,11 @@ const AboutPage = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="text-center"
+                className="text-center p-8 rounded-2xl border border-border bg-card hover:border-primary/30 transition-all duration-300"
               >
-                <div className="relative inline-block">
-                  <AnimatedCounter
-                    end={stat.end}
-                    suffix={stat.suffix}
-                    label={stat.label}
-                  />
-                </div>
+                <p className="text-lg md:text-xl font-semibold text-foreground leading-relaxed">
+                  {stat}
+                </p>
               </motion.div>
             ))}
           </div>

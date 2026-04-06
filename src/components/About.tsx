@@ -40,7 +40,7 @@ export function About() {
                 <div className="text-sm text-muted-foreground">Clients</div>
               </div>
               <div className="text-center space-y-1">
-                <div className="text-4xl font-bold text-primary">5+</div>
+                <div className="text-4xl font-bold text-primary">3+</div>
                 <div className="text-sm text-muted-foreground">Years</div>
               </div>
             </div>

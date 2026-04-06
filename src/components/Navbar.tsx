@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/logo.png";
 
@@ -47,7 +47,7 @@ export function Navbar() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-8">
+            <div className="ml-10 flex items-baseline space-x-8 gap-4">
               {navItems.map((item) => (
                 <Link
                   key={item.path}
@@ -61,6 +61,12 @@ export function Navbar() {
                   {item.label}
                 </Link>
               ))}
+              <Button size="sm" className="bg-primary hover:bg-primary/90 group" asChild>
+                <Link to="/contact" className="flex items-center gap-1">
+                  Book a Call
+                  <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
+                </Link>
+              </Button>
             </div>
           </div>
 
@@ -99,6 +105,12 @@ export function Navbar() {
                 {item.label}
               </Link>
             ))}
+            <Button size="sm" className="bg-primary hover:bg-primary/90 group w-full mt-3" asChild>
+              <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center justify-center gap-1">
+                Book a Call
+                <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
+              </Link>
+            </Button>
           </div>
         </div>
       )}

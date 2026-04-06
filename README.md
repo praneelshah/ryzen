@@ -60,6 +60,10 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
+## Contact Form
+
+The contact form is fully functional and sends emails directly to `praneelshah.india@gmail.com` using EmailJS. Configure your EmailJS credentials in the `.env` file as described in `EMAILJS_SETUP.md`.
+
 ## How can I deploy this project?
 
 Simply open [Lovable](https://lovable.dev/projects/163bd8ad-b669-45b2-aef0-2a54903351e0) and click on Share -> Publish.

@@ -244,7 +244,7 @@ const PortfolioPage = () => {
             className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-20 p-8 rounded-2xl border border-border bg-card"
           >
             {[
-              { value: "500+", label: "Projects Delivered" },
+              { value: "100+", label: "Projects Delivered" },
               { value: "98%", label: "Client Satisfaction" },
               { value: "50+", label: "Industries Served" },
               { value: "15+", label: "Countries" }

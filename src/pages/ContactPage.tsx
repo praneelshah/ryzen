@@ -4,8 +4,7 @@ import { PageHero } from "@/components/ui/page-hero";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { MapPin, Clock, ArrowUpRight, Phone } from "lucide-react";
+import { MapPin, Clock, ArrowUpRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
@@ -15,24 +14,58 @@ const ContactPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
-    email: "",
-    budget: "",
-    message: ""
+    contactType: "email",
+    contactValue: "",
+    businessChallenge: ""
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    toast({
-      title: "Message sent!",
-      description: "We'll get back to you as soon as possible.",
-    });
-    
-    setFormData({ name: "", email: "", budget: "", message: "" });
-    setIsSubmitting(false);
+
+    try {
+      // Formspree endpoint - Replace with your actual Formspree form endpoint
+      const FORMSPREE_ENDPOINT = import.meta.env.VITE_FORMSPREE_ENDPOINT || 'https://formspree.io/f/mlgooywz';
+
+      // Prepare form data
+      const formDataToSend = new FormData();
+      formDataToSend.append('name', formData.name);
+      formDataToSend.append('contact_type', formData.contactType);
+      formDataToSend.append('contact_value', formData.contactValue);
+      formDataToSend.append('business_challenge', formData.businessChallenge);
+      formDataToSend.append('_replyto', formData.contactType === 'email' ? formData.contactValue : '');
+      formDataToSend.append('_subject', `New Contact Form Submission from ${formData.name}`);
+
+      // Send form data to Formspree
+      const response = await fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        body: formDataToSend,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        toast({
+          title: "Message sent successfully!",
+          description: "Thank you for contacting us. We'll get back to you as soon as possible.",
+        });
+
+        // Reset form
+        setFormData({ name: "", contactType: "email", contactValue: "", businessChallenge: "" });
+      } else {
+        throw new Error('Form submission failed');
+      }
+    } catch (error) {
+      console.error('Form submission failed:', error);
+      toast({
+        title: "Failed to send message",
+        description: "Please try again later or contact us directly at praneelshah.india@gmail.com",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -78,24 +111,6 @@ const ContactPage = () => {
                   We'd love to hear from you! Whether you're curious about AI automation, want to discuss a project, or just have a question, our team is here to help.
                 </p>
               </div>
-              
-              {/* Book a Call Card */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-                className="mt-12 p-6 bg-card border border-border rounded-2xl flex items-center justify-between"
-              >
-                <div>
-                  <h3 className="text-xl font-semibold mb-1">Prefer a call?</h3>
-                  <p className="text-muted-foreground">Book 30-mins intro call with us</p>
-                </div>
-                <Button variant="outline" className="group gap-2 rounded-full px-6">
-                  <Phone className="w-4 h-4" />
-                  Book a call
-                  <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                </Button>
-              </motion.div>
             </motion.div>
 
             {/* Right Side - Form */}
@@ -109,10 +124,10 @@ const ContactPage = () => {
                 {/* Full Name */}
                 <div className="space-y-3">
                   <label className="text-xs font-mono tracking-widest text-muted-foreground uppercase">
-                    Full Name
+                    Name
                   </label>
                   <Input
-                    placeholder="Enter your full name"
+                    placeholder="Enter your name"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     required
@@ -120,52 +135,62 @@ const ContactPage = () => {
                   />
                 </div>
                 
-                {/* Email */}
+                {/* Contact Type Selection */}
                 <div className="space-y-3">
                   <label className="text-xs font-mono tracking-widest text-muted-foreground uppercase">
-                    Email
+                    Preferred Contact Method
+                  </label>
+                  <div className="flex gap-6">
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="radio"
+                        name="contactType"
+                        value="email"
+                        checked={formData.contactType === "email"}
+                        onChange={(e) => setFormData({ ...formData, contactType: e.target.value })}
+                        className="w-4 h-4"
+                      />
+                      <span className="text-sm font-medium">Email</span>
+                    </label>
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="radio"
+                        name="contactType"
+                        value="whatsapp"
+                        checked={formData.contactType === "whatsapp"}
+                        onChange={(e) => setFormData({ ...formData, contactType: e.target.value })}
+                        className="w-4 h-4"
+                      />
+                      <span className="text-sm font-medium">WhatsApp</span>
+                    </label>
+                  </div>
+                </div>
+
+                {/* Email or WhatsApp Input */}
+                <div className="space-y-3">
+                  <label className="text-xs font-mono tracking-widest text-muted-foreground uppercase">
+                    {formData.contactType === "email" ? "Email Address" : "WhatsApp Number"}
                   </label>
                   <Input
-                    type="email"
-                    placeholder="Enter email address"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    placeholder={formData.contactType === "email" ? "Enter your email address" : "Enter your WhatsApp number"}
+                    type={formData.contactType === "email" ? "email" : "tel"}
+                    value={formData.contactValue}
+                    onChange={(e) => setFormData({ ...formData, contactValue: e.target.value })}
                     required
                     className="bg-transparent border-0 border-b border-border rounded-none px-0 py-3 text-lg focus-visible:ring-0 focus-visible:border-primary placeholder:text-muted-foreground/50"
                   />
                 </div>
                 
-                {/* Budget */}
+                {/* Business Challenge */}
                 <div className="space-y-3">
                   <label className="text-xs font-mono tracking-widest text-muted-foreground uppercase">
-                    Budget
-                  </label>
-                  <Select 
-                    value={formData.budget} 
-                    onValueChange={(value) => setFormData({ ...formData, budget: value })}
-                  >
-                    <SelectTrigger className="bg-transparent border-0 border-b border-border rounded-none px-0 py-3 text-lg focus:ring-0 focus:border-primary h-auto [&>span]:text-muted-foreground/50 [&>span]:data-[placeholder]:text-muted-foreground/50">
-                      <SelectValue placeholder="Select budget range" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="1k-5k">$1k - $5k</SelectItem>
-                      <SelectItem value="5k-10k">$5k - $10k</SelectItem>
-                      <SelectItem value="10k-20k">$10k - $20k</SelectItem>
-                      <SelectItem value="20k+">$20k+</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                
-                {/* Message */}
-                <div className="space-y-3">
-                  <label className="text-xs font-mono tracking-widest text-muted-foreground uppercase">
-                    Message
+                    What's the one thing in your business you'd most want to fix or automate?
                   </label>
                   <Textarea
-                    placeholder="Describe your project"
+                    placeholder="Tell us about your challenge"
                     rows={4}
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    value={formData.businessChallenge}
+                    onChange={(e) => setFormData({ ...formData, businessChallenge: e.target.value })}
                     required
                     className="bg-transparent border-0 border-b border-border rounded-none px-0 py-3 text-lg focus-visible:ring-0 focus-visible:border-primary resize-none placeholder:text-muted-foreground/50"
                   />
@@ -178,7 +203,7 @@ const ContactPage = () => {
                   className="w-full group h-14 text-base font-medium rounded-xl mt-4"
                   disabled={isSubmitting}
                 >
-                  {isSubmitting ? "Sending..." : "Send message"}
+                  {isSubmitting ? "Sending..." : "Start the conversation"}
                   <ArrowUpRight className="ml-2 w-5 h-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 </Button>
               </form>

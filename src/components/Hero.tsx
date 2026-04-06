@@ -28,10 +28,9 @@ export function Hero() {
               Custom CRM systems, AI automation, modern apps, and RFID-powered solutions — built for speed, reliability, and real-world use.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start pt-2">
-              <Button size="lg" className="bg-primary hover:bg-primary/90 group w-full sm:w-auto" asChild>
+              <Button size="lg" className="w-full sm:w-auto" asChild>
                 <Link to="/contact">
                   Get a Free Strategy Call
-                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </Button>
               <Button size="lg" variant="outline" className="w-full sm:w-auto" asChild>

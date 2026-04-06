@@ -443,10 +443,10 @@ const ServicesPage = () => {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {[
-              { value: "50+", label: "Projects Completed" },
+              { value: "100+", label: "Projects Completed" },
               { value: "98%", label: "Client Satisfaction" },
               { value: "24/7", label: "Support Available" },
-              { value: "5+", label: "Years Experience" }
+              { value: "3+", label: "Years Experience" }
             ].map((stat, index) => (
               <motion.div
                 key={stat.label}
